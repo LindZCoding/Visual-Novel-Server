@@ -24,6 +24,10 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 // it will also set `req.user`
 const requireToken = passport.authenticate('bearer', { session: false })
 
+// require models here
+const Choice = require('../models/choice')
+const User = require('../models/user')
+
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
