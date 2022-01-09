@@ -22,19 +22,19 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 const requireToken = passport.authenticate('bearer', { session: false })
 
 // require models here
-const Choice = require('../models/choice')
+const Character = require('../models/character')
 const User = require('../models/user')
 
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
 // INDEX
-// GET all choices
-router.get('/choices', requireToken, (req, res, next) => {
-	Choice.find()
-		.then(choice => {
-			console.log('choice found:', choice)
-			res.json(choice)
+// GET all characters
+router.get('/characters', requireToken, (req, res, next) => {
+	Character.find()
+		.then(character => {
+			console.log('character found:', character)
+			res.json(character)
 		})
 		.catch(next)
 		// .then((choices) => {
@@ -50,13 +50,13 @@ router.get('/choices', requireToken, (req, res, next) => {
 })
 
 // SHOW
-// GET /choices/5a7db6c74d55bc51bdf39793
-router.get('/choices/:id', requireToken, (req, res, next) => {
+// GET /examples/5a7db6c74d55bc51bdf39793
+router.get('/characters/:id', requireToken, (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
-	Choice.findById(req.params.id)
+	Character.findById(req.params.id)
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "example" JSON
-		.then((choice) => res.status(200).json({ choice: choice.toObject() }))
+		.then((character) => res.status(200).json({ character: character.toObject() }))
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })

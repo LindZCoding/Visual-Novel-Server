@@ -48,6 +48,7 @@ router.post('/sign-up', (req, res, next) => {
 			return {
 				email: req.body.credentials.email,
 				hashedPassword: hash,
+				name: req.body.credentials.name,
 			}
 		})
 		// create user with provided email and hashed password
@@ -98,6 +99,15 @@ router.post('/sign-in', (req, res, next) => {
 		})
 		.catch(next)
 })
+
+router.get('/users', requireToken, (req, res, next) => {
+	User.find()
+		.then(user => {
+			console.log('users found:', user)
+			res.json(user)
+		})
+		.catch(next)
+	})
 
 // CHANGE password
 // PATCH /change-password

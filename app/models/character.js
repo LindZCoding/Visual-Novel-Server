@@ -7,7 +7,7 @@ const characterSchema = new Schema({
         //tell mongoose it's looking for a dialogue id
         type: Schema.Types.ObjectId,
         //refer to that schema
-        ref: 'User'
+        ref: 'Dialogue'
     },
     name: {
         type: String

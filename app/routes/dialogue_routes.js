@@ -22,41 +22,30 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 const requireToken = passport.authenticate('bearer', { session: false })
 
 // require models here
-const Choice = require('../models/choice')
-const User = require('../models/user')
+const Dialogue = require('../models/dialogue')
 
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
 // INDEX
-// GET all choices
-router.get('/choices', requireToken, (req, res, next) => {
-	Choice.find()
-		.then(choice => {
-			console.log('choice found:', choice)
-			res.json(choice)
+// GET all dialogues
+router.get('/dialogues', requireToken, (req, res, next) => {
+	Dialogue.find()
+		.then(dialogue => {
+            console.log('dialogue found: ', dialogue)
+			res.json(dialogue)
 		})
 		.catch(next)
-		// .then((choices) => {
-		// 	// `examples` will be an array of Mongoose documents
-		// 	// we want to convert each one to a POJO, so we use `.map` to
-		// 	// apply `.toObject` to each one
-		// 	return choices.map((choice) => choice.toObject())
-		// })
-		// respond with status 200 and JSON of the examples
-		// .then((choices) => res.status(200).json({ choices: choices }))
-		// if an error occurs, pass it to the handler
-		// .catch(next)
 })
 
 // SHOW
-// GET /choices/5a7db6c74d55bc51bdf39793
-router.get('/choices/:id', requireToken, (req, res, next) => {
+// GET /examples/5a7db6c74d55bc51bdf39793
+router.get('/dialogues/:id', requireToken, (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
-	Choice.findById(req.params.id)
+	Dialogue.findById(req.params.id)
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "example" JSON
-		.then((choice) => res.status(200).json({ choice: choice.toObject() }))
+		.then((dialogue) => res.status(200).json({ dialogue: dialogue.toObject() }))
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })

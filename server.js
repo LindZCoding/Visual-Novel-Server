@@ -5,6 +5,9 @@ const cors = require('cors')
 
 // require route files
 const userRoutes = require('./app/routes/user_routes')
+const dialogueRoutes = require('./app/routes/dialogue_routes')
+const choiceRoutes = require('./app/routes/choice_routes')
+const characterRoutes = require('./app/routes/character_routes')
 
 // require middleware
 const errorHandler = require('./lib/error_handler')
@@ -17,6 +20,16 @@ const db = require('./config/db')
 
 // require configured passport authentication middleware
 const auth = require('./lib/auth')
+const choice = require('./app/models/choice')
+const dialogue = require('./app/models/dialogue')
+const character = require('./app/models/character')
+
+// fake data to save models
+// myDialogue = new dialogue({choiceId: '61da210a48871bfec73c0b0b', dialogueLine: 'zs'})
+// myDialogue.save()
+
+// myCharacters = new character({dialogueId: '61da210a48871bfec73c0b0b', name: 'mushu'})
+// myCharacters.save()
 
 // define server and client ports
 // used for cors and local port declaration
@@ -65,6 +78,9 @@ app.use(requestLogger)
 
 // register route files
 app.use(userRoutes)
+app.use(dialogueRoutes)
+app.use(choiceRoutes)
+app.use(characterRoutes)
 
 // register error handling middleware
 // note that this comes after the route middlewares, because it needs to be
