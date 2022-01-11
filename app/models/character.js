@@ -10,7 +10,13 @@ const characterSchema = new Schema({
         ref: 'Dialogue'
     },
     name: {
-        type: String
+        type: String,
+    },
+    dialogueLines: {
+        type: String,
+    },
+    model: {
+        type: String,
     }
 })
 

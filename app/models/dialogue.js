@@ -10,7 +10,7 @@ const dialogueSchema = new Schema({
         ref: 'Choice'
     },
     dialogueLine: {
-        type: String
+        type: Array
     }
 })
 

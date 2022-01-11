@@ -11,7 +11,10 @@ const choiceSchema = new Schema({
     },
     choiceLine: {
         type: String
-    }
+    },
+    users: Array,
 })
-
-module.exports = mongoose.model('Choice', choiceSchema)
+module.exports = {
+    choiceModel: mongoose.model('Choice', choiceSchema),
+    choiceSchema: choiceSchema
+}

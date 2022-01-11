@@ -16,6 +16,8 @@ const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
 
 const User = require('../models/user')
+const Choice = require('../models/choice')
+const { ObjectId } = require('mongodb')
 
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
@@ -98,6 +100,27 @@ router.post('/sign-in', (req, res, next) => {
 			res.status(201).json({ user: user.toObject() })
 		})
 		.catch(next)
+})
+
+router.post('/users/:userId/choices/:choiceId', requireToken, (req, res, next) => {
+	// set owner of new example to be current user
+	console.log('req pa', req.params.userId)
+	User.find({
+		_id: new ObjectId(req.params.userId)
+	})
+	.then(user => {
+		console.log('user resp ', user)
+		Choice.choiceModel.find({
+			_id: new ObjectId(req.params.choiceId)
+		})
+		.then(choice => {
+			console.log('choice', user[0].choices)
+			user[0].choices.push(choice[0])
+			user[0].save().then(res.status(204).json({ user: user[0].toObject() }))
+		})
+		
+	})
+	.catch(err => console.log(err))
 })
 
 router.get('/users', requireToken, (req, res, next) => {

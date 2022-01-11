@@ -22,7 +22,7 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 const requireToken = passport.authenticate('bearer', { session: false })
 
 // require models here
-const Choice = require('../models/choice')
+const {choiceModel, choiceSchema} = require('../models/choice')
 const User = require('../models/user')
 
 // instantiate a router (mini app that only handles routes)
@@ -31,7 +31,7 @@ const router = express.Router()
 // INDEX
 // GET all choices
 router.get('/choices', requireToken, (req, res, next) => {
-	Choice.find()
+	choiceModel.find()
 		.then(choice => {
 			console.log('choice found:', choice)
 			res.json(choice)
@@ -62,21 +62,18 @@ router.get('/choices/:id', requireToken, (req, res, next) => {
 })
 
 // // CREATE
-// // POST /examples
-// router.post('/examples', requireToken, (req, res, next) => {
-// 	// set owner of new example to be current user
-// 	req.body.example.owner = req.user.id
-
-// 	Example.create(req.body.example)
-// 		// respond to succesful `create` with status 201 and JSON of new "example"
-// 		.then((example) => {
-// 			res.status(201).json({ example: example.toObject() })
-// 		})
-// 		// if an error occurs, pass it off to our error handler
-// 		// the error handler needs the error message and the `res` object so that it
-// 		// can send an error message back to the client
-// 		.catch(next)
-// })
+// // POST.. user chooses a choice and it goes into the array of user who also chose that choice
+router.post('/choices/:choiceId', requireToken, (req, res, next) => {
+	// set owner of new example to be current user
+	Choice.find({
+		_id: req.params.choiceId
+	})
+	.then(resp => {
+		console.log('choice resp ', resp)
+		
+	})
+	.catch(err => console.log(err))
+})
 
 // // UPDATE
 // // PATCH /examples/5a7db6c74d55bc51bdf39793
