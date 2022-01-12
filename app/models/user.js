@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Choice = require('./choice')
+const Dialogue = require('./dialogue')
 
 const userSchema = new mongoose.Schema(
 	{
@@ -17,6 +18,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		// weight: Dialogue.dialogueSchema,
 		choices: [Choice.choiceSchema],
 		token: String,
 	},

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-// const commentSchema = require('./comment')
+const Choice = require('./choice')
+
 
 const dialogueSchema = new Schema({
     choiceId: {
@@ -11,7 +12,11 @@ const dialogueSchema = new Schema({
     },
     dialogueLine: {
         type: Array
-    }
+    },
+    choices: [Choice.choiceSchema]
 })
 
-module.exports = mongoose.model('Dialogue', dialogueSchema)
+module.exports = {
+    dialogueModel: mongoose.model('Dialogue', dialogueSchema),
+    dialogueSchema: dialogueSchema
+}

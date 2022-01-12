@@ -30,7 +30,7 @@ const router = express.Router()
 // INDEX
 // GET all dialogues
 router.get('/dialogues', requireToken, (req, res, next) => {
-	Dialogue.find()
+	Dialogue.dialogueModel.find()
 		.then(dialogue => {
             console.log('dialogue found: ', dialogue)
 			res.json(dialogue)
@@ -42,7 +42,7 @@ router.get('/dialogues', requireToken, (req, res, next) => {
 // GET /examples/5a7db6c74d55bc51bdf39793
 router.get('/dialogues/:id', requireToken, (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
-	Dialogue.findById(req.params.id)
+	Dialogue.dialogueModel.findById(req.params.id)
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "example" JSON
 		.then((dialogue) => res.status(200).json({ dialogue: dialogue.toObject() }))

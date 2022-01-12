@@ -102,6 +102,7 @@ router.post('/sign-in', (req, res, next) => {
 		.catch(next)
 })
 
+// adds users choice to choices array
 router.post('/users/:userId/choices/:choiceId', requireToken, (req, res, next) => {
 	// set owner of new example to be current user
 	console.log('req pa', req.params.userId)
