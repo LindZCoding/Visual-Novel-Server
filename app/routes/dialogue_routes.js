@@ -39,16 +39,22 @@ router.get('/dialogues', requireToken, (req, res, next) => {
 })
 
 // SHOW
-// GET /examples/5a7db6c74d55bc51bdf39793
-router.get('/dialogues/:id', requireToken, (req, res, next) => {
+
+router.get('/dialogues/:title', requireToken, (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
-	Dialogue.dialogueModel.findById(req.params.id)
+	Dialogue.dialogueModel.findOne({
+		title: req.params.title
+	})
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "example" JSON
-		.then((dialogue) => res.status(200).json({ dialogue: dialogue.toObject() }))
+		.then(dialogue => {
+			console.log('dialogue found here: ', dialogue)
+			res.status(200).json({ dialogue: dialogue.toObject() })
+		})
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
+
 
 // // CREATE
 // // POST /examples
