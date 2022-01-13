@@ -22,34 +22,35 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 const requireToken = passport.authenticate('bearer', { session: false })
 
 // require models here
-const Dialogue = require('../models/dialogue')
+const Story = require('../models/story')
 
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
 // INDEX
 // GET all dialogues
-router.get('/dialogues', requireToken, (req, res, next) => {
-	Dialogue.dialogueModel.find()
-		.then(dialogue => {
-            console.log('dialogue found: ', dialogue)
-			res.json(dialogue)
+router.get('/story', requireToken, (req, res, next) => {
+	Story.find()
+		.then(story => {
+            console.log('story found: ', story)
+			res.json(story)
 		})
 		.catch(next)
 })
 
 // SHOW
 
-router.get('/dialogues/:title', requireToken, (req, res, next) => {
-	// req.params.id will be set based on the `:id` in the route
-	Dialogue.dialogueModel.findOne({
-		title: req.params.title
+router.get('/story/:title', requireToken, (req, res, next) => {
+	// grab story where title is ''
+	console.log('title', req.params.title)
+	Story.findOne({
+			title: req.params.title
 	})
-		.then(handle404)
+		// .then(handle404)
 		// if `findById` is succesful, respond with 200 and "example" JSON
-		.then(dialogue => {
-			console.log('dialogue found here: ', dialogue)
-			res.status(200).json({ dialogue: dialogue.toObject() })
+		.then(story => {
+			console.log('story found here: ', story)
+			res.status(200).json({ story: story.toObject() })
 		})
 		// if an error occurs, pass it to the handler
 		.catch(next)
