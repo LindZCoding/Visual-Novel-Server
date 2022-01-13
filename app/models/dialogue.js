@@ -10,7 +10,7 @@ const dialogueSchema = new Schema({
         //refer to that schema
         ref: 'Choice'
     },
-    dialogueLine: {
+    story: {
         type: Array
     },
     choices: [Choice.choiceSchema]
